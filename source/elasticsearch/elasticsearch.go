@@ -61,7 +61,7 @@ var timeQuery = `
 				%s,
 				{
                     "range":{
-                        "@timestamp":{
+                        "%s":{
                             "format":"strict_date_optional_time",
                             "gte":"%s",
                             "lte":"%s"
@@ -79,10 +79,10 @@ func (c *Client) FetchAll(ctx context.Context, from time.Time, now time.Time) ([
 
 	// TODO: add timeQuery
 	if c.TimeQuery == "" {
-		query = fmt.Sprintf(timeQuery, c.Query, from.Format(time.RFC3339), now.Format(time.RFC3339))
-	} else {
-		query = c.Query
+		c.TimeQuery = "@timestamp"
 	}
+
+	query = fmt.Sprintf(timeQuery, c.Query, c.TimeQuery, from.Format(time.RFC3339), now.Format(time.RFC3339))
 
 	slog.DebugContext(ctx, "elasticsearch query", "query", query)
 	resp, err := c.client.Search(
