@@ -67,7 +67,13 @@ func (j *Job) Start(ctx context.Context) (err error) {
 
 func (j *Job) ExtractMessage(ctx context.Context, data map[string]interface{}) (label.Message, error) {
 	labels := j.extractor.ExtractString(data)
-	annotations := label.BuildAnnotations(labels, j.config.Annotation)
+	for k, v := range j.config.StaticLabels {
+		if _, ok := labels[k]; !ok {
+			labels[k] = v
+		}
+	}
+
+	annotations := label.BuildAnnotations(labels, j.config.Annotations)
 
 	return label.Message{
 		ID:          j.config.Name,

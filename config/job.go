@@ -8,8 +8,9 @@ type JobConfig struct {
 	Name     string `json:"name"`
 	Duration int    `json:"duration"`
 
-	Labels     map[string]string `json:"labels"`
-	Annotation map[string]string `json:"annotation"`
+	Labels       map[string]string `json:"labels"`
+	StaticLabels map[string]string `json:"staticLabels"`
+	Annotations  map[string]string `json:"annotations"`
 
 	Type string `json:"type"`
 

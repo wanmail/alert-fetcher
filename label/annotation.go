@@ -17,7 +17,7 @@ func BuildAnnotations(labels map[string]string, relabels map[string]string) map[
 			continue
 		}
 		bf := bytes.NewBufferString("")
-		err = parse.Execute(bf, labels)
+		err = parse.Execute(bf, &labels)
 		if err != nil {
 			slog.Error("failed to execute template", "name", k, "template", tpl, "error", err)
 			continue
