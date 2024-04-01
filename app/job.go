@@ -45,7 +45,7 @@ func (j *Job) Start(ctx context.Context) (err error) {
 	go func() {
 		from := time.Now()
 
-		timer := time.NewTimer(time.Second * time.Duration(j.config.Duration))
+		timer := time.NewTicker(time.Second * time.Duration(j.config.Duration))
 
 		for {
 			select {
